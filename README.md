@@ -73,7 +73,3 @@ personal-linux-shell/
 └── LICENSE                 # Project license (optional)
 
 
-
-
-
-
