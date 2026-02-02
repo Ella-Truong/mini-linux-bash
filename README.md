@@ -40,6 +40,7 @@ A Linux shell is a command line interface (CLI) that allow users to interact wit
 
 ## `Porject Stucture`
 (can modify later)
+``` text
 personal-linux-shell/
 ├── src/
 │   ├── main.cpp            # Entry point and main shell loop
@@ -70,6 +71,8 @@ personal-linux-shell/
 ├── README.md               # Project documentation
 ├── .gitignore              # Ignore compiled binaries and temp files
 └── LICENSE                 # Project license (optional)
+
+
 
 
 
