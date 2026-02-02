@@ -1,14 +1,15 @@
 # 🐧 mini linux bash 
 A Linux shell is a command line interface (CLI) that allow users to interact with the OS by tying commands. Common shell now includes Bash, Zsh, and Fish. A mini bash is a simplified version of the Bash shell that can execute commands, handle basic input/output operations, support pipelines, and manage background processes
 
-##`Purpose of this project`
+
+## `Purpose of this project`
 - To demonstrate practical skills in Linux environment
 - To practice programming in C/C++ for system level applications
 - To understand process management, I/O redirection, and command parsing
 - To implement a simple, functional shell that can be used for education purposes
 - To practice collaborative software development and version control using GitHub
 
-##`Project Objectives`
+## `Project Objectives`
 - Implement a basic shell using C/C++
 - Support built-in commands like `cd` `exit` and `pwd`
 - Implement input/output redirection `<` `>` `>>`
@@ -19,7 +20,7 @@ A Linux shell is a command line interface (CLI) that allow users to interact wit
 - Showcase Linux system programming skills and command-line operations
 - Add-ons (optionals): custom prompt information, colored prompt and output, help menu/banner
 
-##`Timeline`
+## `Timeline`
 
 **Phase 1: Planning & Setup (Week1)**: Discuss project scope and featrues, set up GitHub repo for collaboration. Decide on project structure and team responsibilities
 
@@ -37,7 +38,7 @@ A Linux shell is a command line interface (CLI) that allow users to interact wit
 
 **Phase 6: Testing & Doc (Week 6)**: test all commands, redirection, pipelines, and background processes -> Write detailed documentation
 
-##`Porject Stucture`
+## `Porject Stucture`
 (can modify later)
 personal-linux-shell/
 ├── src/
