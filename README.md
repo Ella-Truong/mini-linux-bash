@@ -2,7 +2,7 @@
 A Linux shell is a command line interface (CLI) that allow users to interact with the OS by tying commands. Common shell now includes Bash, Zsh, and Fish. A mini bash is a simplified version of the Bash shell that can execute commands, handle basic input/output operations, support pipelines, and manage background processes
 
 
-## `Purpose of this project`
+## `Purpose`
 - To demonstrate practical skills in Linux environment
 - To practice programming in C/C++ for system level applications
 - To understand process management, I/O redirection, and command parsing
