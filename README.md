@@ -55,38 +55,38 @@ Designed for educational purposes and hands-on experience with operating system 
 personal-linux-shell/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       └── ci.yml              # Automate build and test pipeline with GitHub Actions.
 │
 ├── src/
-│   ├── main.cpp
-│   ├── parser.cpp
-│   ├── executor.cpp
-│   ├── redirection.cpp
-│   ├── pipeline.cpp
-│   ├── signals.cpp
-│   ├── prompt.cpp
-│   └── utils.cpp
+│   ├── main.cpp               # Start shell loop and coordinate execution flow.
+│   ├── parser.cpp             # Parse user input into command structures.
+│   ├── executor.cpp           # Execute commands and manage processes.
+│   ├── redirection.cpp        # Handle input/output redirection logic.
+│   ├── pipeline.cpp           # Connect commands using Unix pipes.
+│   ├── signals.cpp            # Manage shell signal handling behavior.
+│   ├── prompt.cpp             # Display and update shell prompt.
+│   └── utils.cpp              # Provide shared helper functions.
 │
 ├── include/
-│   ├── shell.hpp
-│   ├── parser.hpp
-│   ├── executor.hpp
-│   ├── redirection.hpp
-│   ├── pipeline.hpp
-│   ├── signals.hpp
-│   ├── prompt.hpp
-│   └── utils.hpp
+│   ├── shell.hpp              # Core shell structures and shared interfaces.
+│   ├── parser.hpp             # Parsing function declarations.
+│   ├── executor.hpp           # Command execution declarations.
+│   ├── redirection.hpp        # Redirection handling declarations.
+│   ├── pipeline.hpp           # Pipeline processing declarations.
+│   ├── signals.hpp            # Signal handling declarations.
+│   ├── prompt.hpp             # Prompt rendering declarations.
+│   └── utils.hpp              # Utility helper declarations.
 │
 ├── tests/
-│   ├── test_commands.sh
-│   ├── test_pipes.sh
-│   └── test_redirection.sh
+│   ├── test_commands.sh       # Test standard command execution.
+│   ├── test_pipes.sh          # Test command pipeline behavior.
+│   └── test_redirection.sh    # Test input/output redirection.
 │
 ├── docs/
-│   ├── architecture.md
-│   └── process-flow.md
+│   ├── architecture.md        # Describe system architecture and modules.
+│   └── process-flow.md        # Explain shell execution lifecycle.
 │
-├── Makefile
-├── README.md
-├── .gitignore
-└── LICENSE
+├── Makefile                   # Build and compilation instructions.
+├── README.md                  # Project overview and usage guide.
+├── .gitignore                 # Ignore generated and temporary files.
+└── LICENSE                    # Project license information.
