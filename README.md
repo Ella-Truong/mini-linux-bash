@@ -1,4 +1,4 @@
-# 🐧 Mini Linux Bash
+# 🐧 Mini Linux Shell
 
 A lightweight Unix-like shell implemented in C/C++ that replicates core functionalities of modern Linux shells such as Bash.
 
@@ -11,6 +11,23 @@ This project demonstrates Linux system programming concepts, including:
 - background process management
 
 Designed for educational purposes and hands-on experience with operating system fundamentals.
+
+---
+
+## 🚧 Project Status
+
+This project is currently under active development.
+
+Planned implementation roadmap:
+- [ ] Core shell loop
+- [ ] External command execution
+- [ ] Built-in commands
+- [ ] Command parser
+- [ ] I/O redirection
+- [ ] Pipelines
+- [ ] Background processes
+- [ ] Signal handling
+- [ ] Testing and documentation improvements
 
 ---
 
@@ -45,7 +62,6 @@ Designed for educational purposes and hands-on experience with operating system 
 - Platform: Linux / Unix
 - Build Tool: Makefile
 - Version Control: Git + GitHub
-- CI/CD: GitHub Actions
 
 ---
 
@@ -53,10 +69,6 @@ Designed for educational purposes and hands-on experience with operating system 
 
 ```bash
 personal-linux-shell/
-├── .github/
-│   └── workflows/
-│       └── ci.yml              # Automate build and test pipeline with GitHub Actions.
-│
 ├── src/
 │   ├── main.cpp               # Start shell loop and coordinate execution flow.
 │   ├── parser.cpp             # Parse user input into command structures.
@@ -90,3 +102,30 @@ personal-linux-shell/
 ├── README.md                  # Project overview and usage guide.
 ├── .gitignore                 # Ignore generated and temporary files.
 └── LICENSE                    # Project license information.
+```
+
+---
+
+## 📚 Documentation
+
+Additional project documentation:
+- `docs/architecture.md` — system architecture and module responsibilities
+- `docs/process-flow.md` — shell execution lifecycle and process behavior
+
+---
+
+## 🎯 Learning Goals
+
+This project is intended to strengthen understanding of:
+- Unix/Linux process management
+- system calls (`fork`, `execvp`, `pipe`, `dup2`)
+- inter-process communication
+- shell execution flow
+- signal handling
+- modular systems programming design
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
