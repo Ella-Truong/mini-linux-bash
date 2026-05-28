@@ -124,8 +124,4 @@ This project is intended to strengthen understanding of:
 - signal handling
 - modular systems programming design
 
----
 
-## 📄 License
-
-This project is licensed under the MIT License.
