@@ -2,6 +2,8 @@
 #include <string>
 #include <unistd.h>    //provide pid_t = process(p_) ID(_id) type(_t), a datatype used for process IDs in Linux 
 #include <sys/wait.h>
+#include <cstdlib>
+#include "parser.hpp"
 
 using namespace std;
 
@@ -20,12 +22,25 @@ int main(){
             break;
         }
 
+        //parse the command
+        vector<string> args = parseCommand(command);
+
         //if not, create a child process
         pid_t id = fork();    //fork() return process ID type
 
         if(id==0){
-            //child process executes command
-            execlp(command.c_str(), command.c_str(), NULL);
+            //convert vector<string> to vector<char*> for execvp()
+            vector<char*> argv;
+
+            for (string& arg: args) {
+                argv.push_back(arg.data());
+            }
+
+            //execvp() needs NULL at the end
+            argv.push_back(nullptr);
+
+            //execute the command
+            execvp(argv[0], argv.data());
 
             //runs only if conmmand fails
             cout << "Command not found" << endl;
