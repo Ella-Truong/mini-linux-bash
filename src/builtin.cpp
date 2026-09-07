@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -81,5 +82,49 @@ bool handleBuiltin(const vector<string>& args) {
 
         return true;
     }
+
+    // CUSTOM BUILT-IN PROGRAMS
+    // myinfo --> process information
+    if (args[0] == "myinfo") {
+        char cwd[1024];
+
+        cout << "PID: " << getpid() << endl;
+        cout << "PPID: " << getppid() << endl;
+        cout << "UID: " << getuid() << endl;
+
+        if (getcwd(cwd, sizeof(cwd)) != nullptr) {
+            cout << "Working directory: " << cwd << endl;
+        }else {
+            perror("myinfo");
+        }
+    }
+
+    //procinfo --> show info of the custom shell itself
+    if (args[0] == "procinfo") {
+        ifstream file("/proc/self/status");
+
+        if (!file) {
+            perror("procinfo");
+            return true;
+        }
+
+        string line;
+        
+        cout << "Process Information: " << endl;
+
+        while (getline(file, line)) {
+            if (line.rfind("Name:", 0) == 0 ||
+                line.rfind("State:", 0) == 0 ||
+                line.rfind("Pid:", 0) == 0 ||
+                line.rfind("PPid:", 0) == 0 ||
+                line.rfind("Uid:", 0) == 0) {
+                    cout << line << endl;
+            }
+        }
+
+        return true;
+    }
+
+
     return false;
 }
