@@ -1,5 +1,5 @@
 all:
-	g++ src/main.cpp -o minishell
+	g++ -Iinclude src/main.cpp src/parser.cpp -o minishell
 run:
 	./minishell
 clean:
