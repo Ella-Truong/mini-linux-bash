@@ -48,5 +48,38 @@ bool handleBuiltin(const vector<string>& args) {
 
         return true;
     }
+
+    if (args[0] == "export") {
+        //export needs a variable assignment, like export NAME=Ella
+        if (args.size() < 2) {
+            cout << "export: missing argument" << endl;
+            return true;
+        }
+        
+        //get the assignment" "NAME=Ella"
+        string assignment = args[1];
+        
+        //search for the position of =
+        //find() return index of '=' if found
+        //or string::npos if '=' does not exist
+        size_t equalPos = assignment.find('=');
+
+        if (equalPos == string::npos) {
+            cout << "export: invalid format" << endl;
+            return true;
+        }
+        
+        //split "NAME=Ella" into name="NAME" and value="Ella"
+        string name = assignment.substr(0, equalPos);
+        string value = assignment.substr(equalPos + 1);
+        
+        //Add the variable to the shell's environment
+        //The child process will inherit this env after folk()
+        if (setenv(name.c_str(), value.c_str(), 1) != 0) {
+            perror("export");
+        }
+
+        return true;
+    }
     return false;
 }
