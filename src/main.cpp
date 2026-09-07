@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <cstdlib>
 #include "parser.hpp"
+#include "builtin.hpp"
 
 using namespace std;
 
@@ -28,6 +29,10 @@ int main(){
 
         //skip empty commands
         if (args.empty()) {
+            continue;
+        }
+
+        if (handleBuiltin(args)) {
             continue;
         }
 
