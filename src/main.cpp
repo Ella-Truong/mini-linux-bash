@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <unistd.h>    //provide pid_t = process(p_) ID(_id) type(_t), a datatype used for process IDs in Linux 
 #include <sys/wait.h>
 #include <cstdlib>
@@ -25,10 +26,19 @@ int main(){
         //parse the command
         vector<string> args = parseCommand(command);
 
+        //skip empty commands
+        if (args.empty()) {
+            continue;
+        }
+
         //if not, create a child process
         pid_t id = fork();    //fork() return process ID type
 
-        if(id==0){
+        if (id < 0) {
+            //fork failed
+            cout << "Failed to create process" << endl;
+
+        }else if(id==0){
             //convert vector<string> to vector<char*> for execvp()
             vector<char*> argv;
 
@@ -43,7 +53,7 @@ int main(){
             execvp(argv[0], argv.data());
 
             //runs only if conmmand fails
-            cout << "Command not found" << endl;
+            perror("execvp");
             exit(1);
 
         }else{
