@@ -3,6 +3,10 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <cctype>
+#include <filesystem>
 
 using namespace std;
 
@@ -97,6 +101,8 @@ bool handleBuiltin(const vector<string>& args) {
         }else {
             perror("myinfo");
         }
+
+        return true;
     }
 
     //procinfo --> show info of the custom shell itself
@@ -121,6 +127,131 @@ bool handleBuiltin(const vector<string>& args) {
                     cout << line << endl;
             }
         }
+
+        return true;
+    }
+
+    //memtop
+    if (args[0] == "memtop") {
+        //store information about each process
+        struct ProcessMemory {
+            int pid;
+            string name;
+            long rssKB;
+        };
+        
+        //get total system memory
+        long totalMemoryKB = 0;
+
+        ifstream memFile("/proc/meminfo");
+
+        if (!memFile) {
+           perror("memtop");
+           return true;
+        }
+
+        string line;
+
+        while(getline(memFile, line)) {
+            if (line.rfind("MemTotal:", 0) == 0) {
+                stringstream ss(line);
+
+                string label;
+                ss >> label >> totalMemoryKB;
+
+                break;
+            }
+        }
+
+        if (totalMemoryKB == 0) {
+            cout << "memtop: could not read total memory" << endl;
+            return true;
+        }
+
+        //store all processes
+        vector<ProcessMemory> processes;
+
+        //go through /proc
+        for (const auto& entry : filesystem::directory_iterator("/proc")) {
+            if(!entry.is_directory()){
+                continue;
+            }
+
+            string directoryName = entry.path().filename().string();
+
+            //only process directions have numeric names
+            if (directoryName.empty() || !all_of(directoryName.begin(), directoryName.end(), ::isdigit)) {
+                continue;
+            }
+
+            int pid = stoi(directoryName);
+
+            //open /proc/PID/status
+            string statusPath = entry.path().string() + "/status";
+
+            ifstream statusFile(statusPath);
+
+            if(!statusFile){
+                continue;
+            }
+
+            string name;
+            long rssKB = 0;
+
+            //read process information
+            while (getline(statusFile, line)) {
+                if(line.rfind("Name:", 0) == 0){
+                    stringstream ss(line);
+
+                    string label;
+                    ss >> label >> name;
+
+                }else if (line.rfind("VmRSS:", 0) == 0){
+                    stringstream ss(line);
+
+                    string label;
+                    ss >> label >> rssKB;
+                }
+            }
+
+            //store process information
+            if(!name.empty()){
+                processes.push_back({pid, name, rssKB});
+            }
+        }
+
+        //sort process by RAM usage
+        sort(processes.begin(), processes.end(), 
+            [](const ProcessMemory& a, const ProcessMemory& b) {
+            return a.rssKB > b.rssKB;
+            });
+
+        // Display results
+        cout << endl;
+        cout << "========== MEMORY ANALYSIS ==========" << endl;
+        cout << endl;
+
+        cout << "Total RAM: "
+            << totalMemoryKB / 1024
+            << " MB"
+            << endl;
+
+        cout << endl;
+        cout << "PID\tNAME\t\tRAM\t\t%" << endl;
+        cout << "---------------------------------------------" << endl;
+
+        for (const auto& process : processes) {
+            double percentage =
+                (static_cast<double>(process.rssKB) / totalMemoryKB) * 100;
+
+            cout << process.pid << "\t"
+                << process.name << "\t\t"
+                << process.rssKB / 1024 << " MB\t"
+                << percentage << "%"
+                << endl;
+        }
+
+        cout << endl;
 
         return true;
     }
