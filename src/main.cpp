@@ -25,20 +25,20 @@ int main(){
         }
 
         //parse the command
-        vector<string> args = parseCommand(command);
+        Command parsedCommand = parseCommand(command);
 
         //skip empty commands
-        if (args.empty()) {
+        if (parsedCommand.args.empty()) {
             continue;
         }
         
         //handle built-in commands
-        if (handleBuiltin(args)) {
+        if (handleBuiltin(parsedCommand.args)) {
             continue;
         }
 
         //execute external commands
-        executeExternalCommand(args);
+        executeExternalCommand(parsedCommand);
     }
 
     return 0;

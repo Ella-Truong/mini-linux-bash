@@ -3,16 +3,29 @@
 
 using namespace std;
 
-vector<string> parseCommand(const string& command) {
-    vector<string> args;
-    stringstream ss(command);
 
+Command parseCommand(const string& command) {
+    Command result;
+
+    stringstream ss(command);
     string word;
     
     while(ss >> word) {
-        args.push_back(word);
+        if (word == ">") {
+            result.appendOutput = false;
+            ss >> result.outputFile;
+
+        }else if(word == ">>") {
+            result.appendOutput = true;
+            ss >> result.outputFile;
+
+        }else if(word == "<") {
+            ss >> result.inputFile;
+
+        }else{
+            result.args.push_back(word);
+        }
     }
 
-    return args;
-
+    return result;
 }

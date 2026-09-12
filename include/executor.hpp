@@ -1,11 +1,10 @@
 #ifndef EXECUTOR_HPP
 #define EXECUTOR_HPP
 
-#include <string>
-#include <vector>
+#include "parser.hpp"
 
 using namespace std;
 
-void executeExternalCommand(const vector<string>& args);
+void executeExternalCommand(const Command& command);
 
 #endif
