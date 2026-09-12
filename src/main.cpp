@@ -5,6 +5,7 @@
 #include "parser.hpp"
 #include "builtin.hpp"
 #include "executor.hpp"
+#include "prompt.hpp"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int main(){
 
     while(true){
         //show shell prompt
-        cout << "mini-shell> ";
+        displayPrompt();
 
         //read user input
         getline(cin, command);
@@ -38,7 +39,6 @@ int main(){
 
         //execute external commands
         executeExternalCommand(args);
-        
     }
 
     return 0;
