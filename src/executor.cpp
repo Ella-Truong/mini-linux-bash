@@ -21,16 +21,26 @@ void executeExternalCommand(const Command& command) {
     if (id == 0) {
         // handle input redirection
         if (!command.inputFile.empty()){
+            //inputFd is a int number, refering to open-file
+            //open() is a POSIX API, returning a file descriptor number
             int inputFd = open(
+                //get a pointer to the C-stype, null-terminated character sequence
+                //convert C++ string filename to sequence of chars, requied by th POSIX open() API
                 command.inputFile.c_str(),
+
+                //open file in read-only mode
                 O_RDONLY
             );
-
+            
+            //if Linux may not able to open the file --> failure --> inputFd = -1
             if (inputFd < 0) {
                 perror("open input file");
                 _exit(1);
             }
-
+            
+            //redirect standard input (fd = 0) to the opened input file
+            //after this, the child process reads input from the file instead of the keyboard
+            // FILENO = File Descriptor Number
             dup2(inputFd, STDIN_FILENO);
             close(inputFd);
         }

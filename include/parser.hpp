@@ -15,6 +15,7 @@ struct Command {
     bool appendOutput = false;
 };
 
+//this function is to return Command object 
 Command parseCommand(const string& command);
 
 #endif
