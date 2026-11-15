@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <unistd.h>    //provide pid_t = process(p_) ID(_id) type(_t), a datatype used for process IDs in Linux 
-#include <sys/wait.h>
-#include <cstdlib>
+
 #include "parser.hpp"
 #include "builtin.hpp"
+#include "executor.hpp"
+#include "prompt.hpp"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main(){
 
     while(true){
         //show shell prompt
-        cout << "mini-shell> ";
+        displayPrompt();
 
         //read user input
         getline(cin, command);
@@ -25,46 +25,20 @@ int main(){
         }
 
         //parse the command
-        vector<string> args = parseCommand(command);
+        Command parsedCommand = parseCommand(command);
 
         //skip empty commands
-        if (args.empty()) {
+        if (parsedCommand.args.empty()) {
+            continue;
+        }
+        
+        //handle built-in commands
+        if (handleBuiltin(parsedCommand.args)) {
             continue;
         }
 
-        if (handleBuiltin(args)) {
-            continue;
-        }
-
-        //if not, create a child process
-        pid_t id = fork();    //fork() return process ID type
-
-        if (id < 0) {
-            //fork failed
-            cout << "Failed to create process" << endl;
-
-        }else if(id==0){
-            //convert vector<string> to vector<char*> for execvp()
-            vector<char*> argv;
-
-            for (string& arg: args) {
-                argv.push_back(arg.data());
-            }
-
-            //execvp() needs NULL at the end
-            argv.push_back(nullptr);
-
-            //execute the command
-            execvp(argv[0], argv.data());
-
-            //runs only if conmmand fails
-            perror("execvp");
-            exit(1);
-
-        }else{
-            //present waits for child
-            wait(NULL);
-        }
+        //execute external commands
+        executeExternalCommand(parsedCommand);
     }
 
     return 0;
